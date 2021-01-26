@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class VendasApplication {
 
@@ -18,8 +20,8 @@ public class VendasApplication {
             clientes.save(new Cliente("Rodolfo"));
             clientes.save(new Cliente("Thaís"));
 
-            boolean existe = clientes.existsByNome("Rodolfo");
-            System.out.println("Existe um cliente com o nome Rodolfo? " + existe);
+            List<Cliente> result = clientes.encontrarPorNome("Rodolfo");
+            result.forEach(System.out::println);
         };
     }
 
