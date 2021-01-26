@@ -1,7 +1,7 @@
 package io.github.rodolfoalvarenga;
 
 import io.github.rodolfoalvarenga.domain.entity.Cliente;
-import io.github.rodolfoalvarenga.domain.repositorio.Clientes;
+import io.github.rodolfoalvarenga.domain.repository.Clientes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
