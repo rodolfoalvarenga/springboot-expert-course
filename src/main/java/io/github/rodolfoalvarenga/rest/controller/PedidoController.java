@@ -21,7 +21,9 @@ public class PedidoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Integer save(@RequestBody PedidoDTO dto) {
+        // retorna o pedido salvo/realizado
         Pedido pedido = service.salvar(dto);
+        // retorna o Id deste novo pedido
         return pedido.getId();
     }
 }
