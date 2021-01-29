@@ -4,6 +4,7 @@ import io.github.rodolfoalvarenga.domain.entity.Cliente;
 import io.github.rodolfoalvarenga.domain.entity.ItemPedido;
 import io.github.rodolfoalvarenga.domain.entity.Pedido;
 import io.github.rodolfoalvarenga.domain.entity.Produto;
+import io.github.rodolfoalvarenga.domain.enums.StatusPedido;
 import io.github.rodolfoalvarenga.domain.repository.Clientes;
 import io.github.rodolfoalvarenga.domain.repository.ItensPedido;
 import io.github.rodolfoalvarenga.domain.repository.Pedidos;
@@ -53,6 +54,7 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setDataPedido(LocalDate.now());
         // popula totalmente o cliente com as informações achadas do cliente com o id idCliente
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         // recebe os dados para salvar a lista de ItemPedido
         List<ItemPedido> itensPedido = converterItens(pedido, dto.getItens());
