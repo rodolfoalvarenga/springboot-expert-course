@@ -2,6 +2,8 @@ package io.github.rodolfoalvarenga.rest.controller;
 
 import io.github.rodolfoalvarenga.domain.entity.ItemPedido;
 import io.github.rodolfoalvarenga.domain.entity.Pedido;
+import io.github.rodolfoalvarenga.domain.enums.StatusPedido;
+import io.github.rodolfoalvarenga.rest.dto.AtualizacaoStatusPedidoDTO;
 import io.github.rodolfoalvarenga.rest.dto.InformacaoItemPedidoDTO;
 import io.github.rodolfoalvarenga.rest.dto.InformacoesPedidoDTO;
 import io.github.rodolfoalvarenga.rest.dto.PedidoDTO;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +48,13 @@ public class PedidoController {
                 .obterPedidoCompleto(id)
                 .map(p -> converter(p))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado"));
+    }
+
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatus(@PathVariable Integer id, @RequestBody AtualizacaoStatusPedidoDTO dto) {
+        String novoStatus = dto.getNovoStatus();
+        service.atualizarStatus(id, StatusPedido.valueOf(novoStatus));
     }
 
     private InformacoesPedidoDTO converter(Pedido pedido) {

@@ -9,6 +9,7 @@ import io.github.rodolfoalvarenga.domain.repository.Clientes;
 import io.github.rodolfoalvarenga.domain.repository.ItensPedido;
 import io.github.rodolfoalvarenga.domain.repository.Pedidos;
 import io.github.rodolfoalvarenga.domain.repository.Produtos;
+import io.github.rodolfoalvarenga.exception.PedidoNaoEncontracoException;
 import io.github.rodolfoalvarenga.exception.RegraNegocioException;
 import io.github.rodolfoalvarenga.rest.dto.ItemPedidoDTO;
 import io.github.rodolfoalvarenga.rest.dto.PedidoDTO;
@@ -68,6 +69,17 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<Pedido> obterPedidoCompleto(Integer id) {
         return repository.findByIdFetchItens(id);
+    }
+
+    @Override
+    @Transactional
+    public void atualizarStatus(Integer id, StatusPedido statusPedido) {
+        repository
+                .findById(id)
+                .map(pedido -> {
+                    pedido.setStatus(statusPedido);
+                    return repository.save(pedido);
+                }).orElseThrow(() -> new PedidoNaoEncontracoException());
     }
 
     // responsável em converter itens, em ItemPedido
